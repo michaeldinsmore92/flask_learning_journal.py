@@ -1,5 +1,4 @@
-# flask_learning_journal.py
-Flask Learning Journal
+# Flask Learning Journal
 
 This is a basic app built with Python, Flask, and Peewee.
 
