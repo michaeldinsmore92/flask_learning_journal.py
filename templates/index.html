@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% for entry in entries %}
+    <div class="entry-list"></div>
+        <article>
+            <h2>
+                <a href="{{ url_for('detail', id=entry.entry_id) }}">{{ entry.title }}</a>
+            </h2>
+            <time datetime="{{ entry.date }}">{{ entry.date }}</time>
+        </article>
+    </div>
+{% endfor %}
+{% endblock %}

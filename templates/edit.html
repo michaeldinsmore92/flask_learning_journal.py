@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="edit-entry">
+    <h2>Edit Entry</h2>
+    <form method='POST' action='' class='form'>
+        {{ form.hidden_tag() }}
+        {% for field in form %}
+            {% if field.name == 'title' %}
+                <label for="{{ field.name }}">{{ field.label.text }}</label>
+                {{ field(value=entry.title) }}
+                <br><br>
+            {% elif field.name == 'time_spent' %}
+                <label for="{{ field.name }}">{{ field.label.text }}</label>
+                {{ field(value=entry.time_spent) }}
+                <br><br>
+            {% elif field.name == 'what_you_learned' %}
+                <label for="{{ field.name }}">{{ field.label.text }}</label>
+                {{ field(value=entry.what_you_learned) }}
+                <br><br>
+            {% elif field.name == 'resources_to_remember' %}
+                <label for="{{ field.name }}">{{ field.label.text }}</label>
+                {{ field(value=entry.resources_to_remember) }}
+                <br><br>
+            {% elif field.name == 'tags' %}
+                <label for="{{ field.name }}">{{ field.label.text }}</label>
+                {{ field(value=entry.tags) }}
+                <br><br>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" value="Submit Edits" class="button"><br><br>
+        <a href="{{ url_for('delete', id=entry.entry_id) }}" class="button button-secondary">Delete</a><br><br>
+        <a href="{{ url_for('index') }}" class="button button-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
