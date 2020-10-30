@@ -31,7 +31,7 @@ def after_request(response):
 @app.route('/entries')
 def index():
     """Main Page"""
-    entries = models.Entry.select().limit(5)
+    entries = models.Entry.select()
     return render_template('index.html', entries=entries)
     
 
@@ -42,13 +42,12 @@ def new_entry():
     if form.validate_on_submit():
         models.Entry.create_entry(
             title = form.title.data.strip(),
-            date = form.date,
+            date = form.date.data.strftime('%B %d, %Y'),
             time_spent = form.time_spent.data.strip(),
             what_you_learned = form.what_you_learned.data.strip(),
             resources_to_remember = form.resources_to_remember.data.strip(),
             tags = form.tags.data.strip()
         )
-        flash("Entry posted! Thank you!", "success")
         return redirect(url_for('index'))
     return render_template('new.html', form=form)
 
@@ -69,20 +68,19 @@ def edit(id):
     form = forms.EntryForm()
     try:
         entry = models.Entry.get(models.Entry.entry_id == id)
+        if form.validate_on_submit():
+            entry.title = form.title.data.strip()
+            entry.date = form.date.data.strftime('%B %d, %Y')
+            entry.time_spent = form.time_spent.data.strip()
+            entry.what_you_learned = form.what_you_learned.data.strip()
+            entry.resources_to_remember = form.resources_to_remember.data.strip()
+            entry.tags = form.tags.data
+            entry.save()
+            return redirect(url_for('index'))
+        else:
+            return render_template('edit.html', entry=entry, form=form)    
     except models.DoesNotExist:
-        abort(404)      
-    if form.validate_on_submit():
-        entry.title = form.title.data.strip()
-        entry.date = form.date
-        entry.time_spent = form.time_spent.data.strip()
-        entry.what_you_learned = form.what_you_learned.data.strip()
-        entry.resources_to_remember = form.resources_to_remember.data.strip()
-        entry.tags = form.tags.data
-        entry.save()
-        flash("Entry saved! Thank you!", "success")
-        return redirect(url_for('index'))
-    else:
-        return render_template('edit.html', entry=entry, form=form)    
+        abort(404)
 
 
 @app.route('/entries/<id>/delete')
