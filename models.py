@@ -8,7 +8,7 @@ DATABASE = SqliteDatabase('journal.db')
 class Entry(Model):
     entry_id = AutoField()
     title = TextField()
-    date = DateTimeField(default=datetime.datetime.now().strftime('%B %d, %Y %I:%M%p'))
+    date = DateTimeField(default=datetime.datetime.now().strftime('%B %d, %Y'))
     time_spent = TextField()
     what_you_learned = TextField()
     resources_to_remember = TextField()
