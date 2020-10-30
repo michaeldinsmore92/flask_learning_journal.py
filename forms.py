@@ -12,20 +12,23 @@ class EntryForm(Form):
         "Title",
         [validators.DataRequired("Please enter a title.")]
     )
-    date = datetime.datetime.now().strftime('%B %d, %Y %I:%M%p')
+    date = DateField(
+        "Date",
+        [validators.DataRequired("Please enter a date.")]
+    )
     time_spent = StringField(
-        "Time Spent (ex. 1 hour)",
-        [validators.DataRequired("Please enter a value.")]
+        "Time Spent",
+        [validators.DataRequired("Please enter the amount of time spent.")]
     )
     what_you_learned = StringField(
         "What You Learned",
         [validators.DataRequired("Please enter what you learned today.")]
     )
     resources_to_remember = StringField(
-        "Sources you want to remember", 
-        [validators.DataRequired("Please enter a value.")]
+        "Resources to Remember", 
+        [validators.DataRequired("Please enter at least one resource.")]
     )
     tags = StringField(
-        "Separate by comma (,)", 
+        "Tags", 
         [validators.DataRequired("Please enter at least one tag.")]
     )
